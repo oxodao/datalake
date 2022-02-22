@@ -1,6 +1,6 @@
 # Datalake
 
-The goal of this app is to process all RGPD stuff you can get and have neat dashboards helping you to understand them !
+The goal of this app is to process all GDPR stuff you can get and have neat dashboards helping you to understand them !
 
 ## Setup
 
@@ -27,3 +27,12 @@ spotify:
   client_id: YOUR_SPOTIFY_CLIENT_ID
   client_secret: YOUR_SPOTIFY_CLIENT_SECRET
 ```
+
+Install the DB `db_init/0_Schema.sql` only
+
+Create a user: `datalake user create -u USERNAME -p PASSWORD`
+
+Run the server: `datalake run`
+
+Log into your modules:
+    - http://localhost:8534/api/spotify/auth
