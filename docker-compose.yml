@@ -1,0 +1,12 @@
+services:
+  database:
+    image: postgres:14-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: datalake
+      POSTGRES_PASSWORD: datalake
+      POSTGRES_DB: datalake
+    volumes:
+      - ./db_init:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
