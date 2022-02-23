@@ -53,5 +53,5 @@ func (dp DataProvider) RegisterRoutes(r *mux.Router) {
 }
 
 func (dp DataProvider) RegisterCustomCommands(cmd *cobra.Command) {
-	cmd.AddCommand(importCmd)
+	registerImportCmd(cmd)
 }

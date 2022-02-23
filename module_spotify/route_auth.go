@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/oxodao/datalake/services"
+	"github.com/zmb3/spotify/v2"
 )
 
 // @TODO: Authenticate this request so that no one can change the account
@@ -30,7 +31,14 @@ func routeCallback(dp *DataProvider) func(w http.ResponseWriter, r *http.Request
 
 		data, _ := json.Marshal(tok)
 
-		err = services.Get().ORM.Auth.InsertModuleAuthentication(user, dp.GetName(), string(data))
+		client := spotify.New(dp.Authenticator.Client(r.Context(), tok))
+		su, err := client.CurrentUser(r.Context())
+		if err != nil {
+			http.Error(w, "The Spotify API returned an error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		err = services.Get().ORM.Auth.InsertModuleAuthentication(user, dp.GetName(), su.ID, string(data))
 		if err != nil {
 			http.Error(w, "Could not insert authentication: "+err.Error(), http.StatusInternalServerError)
 		}

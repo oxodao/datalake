@@ -28,6 +28,8 @@ func main() {
 			Short: strings.Title(dp.GetName()) + " module for Datalake",
 		}
 
+		dp.RegisterCustomCommands(customCmd)
+
 		cmd.RootCmd.AddCommand(customCmd)
 	}
 

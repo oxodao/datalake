@@ -6,7 +6,17 @@ services:
       POSTGRES_USER: datalake
       POSTGRES_PASSWORD: datalake
       POSTGRES_DB: datalake
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./db_init:/docker-entrypoint-initdb.d
+      - ./docker-data/db:/var/lib/postgresql/data/pgdata
     ports:
-      - 5432:5432
+      - 5430:5432
+
+  grafana:
+    image: grafana/grafana-oss
+    user: 1000:1000
+    volumes:
+      - ./docker-data/grafana:/var/lib/grafana
+    ports:
+      - 3333:3000
