@@ -21,8 +21,7 @@ CREATE TABLE provider_authentication (
 
 -- MODULES
 --- SPOTIFY
-
-CREATE TABLE module_spotify_artists (
+CREATE TABLE module_spotify_artist (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     spotify_id VARCHAR(128) UNIQUE DEFAULT NULL, -- @TODO: Unique only on spotify_id
     display_name VARCHAR(128) UNIQUE NOT NULL    -- Remember to check if there are multiple artist going by the same name
@@ -30,10 +29,10 @@ CREATE TABLE module_spotify_artists (
 
 CREATE TABLE module_spotify_track (
     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    spotify_id VARCHAR(128) UNIQUE DEFAULT NULL,
-    artist_id UUID NOT NULL REFERENCES module_spotify_artists(id),
-    display_name VARCHAR(256),
-    UNIQUE (artist_id, display_name) -- @TODO: Unique only on spotify_id
+    spotify_id VARCHAR(128) DEFAULT NULL,
+    artist_id UUID NOT NULL REFERENCES module_spotify_artist(id),
+    display_name VARCHAR(256) UNIQUE,
+    UNIQUE (spotify_id, artist_id)
 );
 
 CREATE TABLE module_spotify_played_track (
@@ -44,3 +43,5 @@ CREATE TABLE module_spotify_played_track (
     duration_played INTEGER NULL,
     UNIQUE (track_id, spotify_played_at)
 );
+
+--- Twitch

@@ -23,7 +23,7 @@ func (o ORM) GetArtist(name string) (DatalakeArtist, error) {
 
 func (o ORM) UpsertArtist(name string) (string, error) {
 	row := o.db.QueryRowx(`
-		INSERT INTO module_spotify_artists (display_name)
+		INSERT INTO module_spotify_artist (display_name)
 		VALUES ($1)
 		ON CONFLICT (display_name) DO UPDATE SET display_name = EXCLUDED.display_name
 		RETURNING id
@@ -43,7 +43,7 @@ func (o ORM) UpsertTrack(idArtist, track string) (string, error) {
 	row := o.db.QueryRowx(`
 		INSERT INTO module_spotify_track (artist_id, display_name)
 		VALUES ($1, $2)
-		ON CONFLICT (artist_id, display_name) DO UPDATE SET display_name = EXCLUDED.display_name
+		ON CONFLICT (display_name) DO UPDATE SET display_name = EXCLUDED.display_name
 		RETURNING id
 	`, idArtist, track)
 

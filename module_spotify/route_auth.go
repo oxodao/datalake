@@ -38,7 +38,7 @@ func routeCallback(dp *DataProvider) func(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		err = services.Get().ORM.Auth.InsertModuleAuthentication(user, dp.GetName(), su.ID, string(data))
+		err = services.Get().ORM.Auth.UpsertModuleAuthentication(user, dp.GetName(), su.ID, string(data))
 		if err != nil {
 			http.Error(w, "Could not insert authentication: "+err.Error(), http.StatusInternalServerError)
 		}
